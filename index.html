@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammad Imran - Online Quran Tutor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== RESET & BASE STYLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0a5c1a;
+            --secondary: #d4af37;
+            --accent: #2e8b57;
+            --light: #f8f5e6;
+            --dark: #083412;
+            --text: #333;
+            --shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: #fff;
+            overflow-x: hidden;
+        }
+
+        .arabic {
+            font-family: 'Amiri', serif;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Amiri', serif;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--secondary);
+            color: var(--dark);
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--secondary);
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: white;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary);
+        }
+
+        .nav-menu a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-menu a:hover:after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(rgba(10, 92, 26, 0.9), rgba(10, 92, 26, 0.95)), 
+                        url('https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding-top: 100px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* ===== ABOUT ===== */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-img {
+            position: relative;
+        }
+
+        .about-img img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .experience-badge {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 20px;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            box-shadow: var(--shadow);
+        }
+
+        .experience-badge .years {
+            font-size: 2.5rem;
+            line-height: 1;
+        }
+
+        .qualification-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .qualification-item {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--secondary);
+        }
+
+        /* ===== COURSES ===== */
+        .courses {
+            background: #f8f9fa;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .course-header {
+            background: var(--primary);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .course-header i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        .course-body {
+            padding: 25px;
+        }
+
+        .course-features {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .course-features li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+
+        .course-features li i {
+            color: var(--accent);
+            margin-right: 10px;
+        }
+
+        /* ===== STATS ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        /* ===== DEMO MODAL ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-header {
+            padding: 25px;
+            background: var(--primary);
+            color: white;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            color: white;
+            margin: 0;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonial {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .testimonial-content {
+            font-style: italic;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        /* ===== CONTACT ===== */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .contact-info {
+            background: var(--primary);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+        }
+
+        .contact-info h3 {
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .contact-item i {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            width: 30px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+
+        /* ===== UTILITY CLASSES ===== */
+        .text-center { text-align: center; }
+        .mt-20 { margin-top: 20px; }
+        .mt-30 { margin-top: 30px; }
+        .mt-50 { margin-top: 50px; }
+        .mb-20 { margin-bottom: 20px; }
+        .mb-30 { margin-bottom: 30px; }
+        .mb-50 { margin-bottom: 50px; }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 992px) {
+            .about-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 30px;
+                box-shadow: var(--shadow);
+                transition: all 0.3s;
+                z-index: 999;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .hero-buttons .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .experience-badge {
+                width: 100px;
+                height: 100px;
+                padding: 15px;
+                right: -10px;
+                bottom: -10px;
+            }
+
+            .experience-badge .years {
+                font-size: 2rem;
+            }
+
+            .modal-content {
+                margin: 10px;
+            }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="#home" class="logo">
+                <i class="fas fa-book-quran"></i>
+                Quran<span>Master</span>
+            </a>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="#stats">Stats</a></li>
+                    <li><a href="#testimonials">Reviews</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#" class="btn" id="demoBtn">Free Demo</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="arabic">بسم الله الرحمن الرحيم</h1>
+                <h1>Learn Quran Online with Expert Guidance</h1>
+                <p>Master Quran recitation with proper Tajweed from an experienced Hafiz tutor. Personalized one-on-one online classes for students of all ages worldwide.</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary" id="heroDemoBtn">Start Free Trial Class</a>
+                    <a href="#courses" class="btn">View All Courses</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Your Tutor</h2>
+                <p>Learn from a certified Quran expert with years of teaching experience</p>
+            </div>
+            
+            <div class="about-grid">
+                <div class="about-img">
+                    <img src="https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Quran Teaching">
+                    <div class="experience-badge">
+                        <div class="years">10+</div>
+                        <div>Years Experience</div>
+                    </div>
+                </div>
+                
+                <div class="about-content">
+                    <h3>Muhammad Imran</h3>
+                    <p class="arabic">حافظ محمد عمران</p>
+                    <p><strong>Certified Quran Tutor | Tajweed Expert | Hafiz-e-Quran</strong></p>
+                    <p>Assalamu Alaikum! I am Muhammad Imran, a professional Online Quran Tutor from Azad Kashmir, Pakistan. With over 10 years of teaching experience, I have successfully taught Quran to students from 25+ countries.</p>
+                    
+                    <div class="qualification-grid mt-30">
+                        <div class="qualification-item">
+                            <h4><i class="fas fa-graduation-cap"></i> Qualifications</h4>
+                            <p>Hafiz-e-Quran, Ijazah in Tajweed, Islamic Studies Diploma</p>
+                        </div>
+                        <div class="qualification-item">
+                            <h4><i class="fas fa-language"></i> Languages</h4>
+                            <p>Urdu, English, Arabic (Basic)</p>
+                        </div>
+                        <div class="qualification-item">
+                            <h4><i class="fas fa-map-marker-alt"></i> Location</h4>
+                            <p>Azad Kashmir, Pakistan</p>
+                        </div>
+                        <div class="qualification-item">
+                            <h4><i class="fas fa-clock"></i> Availability</h4>
+                            <p>24/7 Online Classes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section id="courses" class="courses">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Courses</h2>
+                <p>Comprehensive Quran learning programs for all levels</p>
+            </div>
+            
+            <div class="courses-grid">
+                <div class="course-card">
+                    <div class="course-header">
+                        <i class="fas fa-book-open"></i>
+                        <h3>Noorani Qaida</h3>
+                    </div>
+                    <div class="course-body">
+                        <p>Perfect for beginners. Learn Arabic alphabet, pronunciation, and basic reading rules.</p>
+                        <ul class="course-features">
+                            <li><i class="fas fa-check"></i> Arabic Letters Recognition</li>
+                            <li><i class="fas fa-check"></i> Proper Pronunciation</li>
+                            <li><i class="fas fa-check"></i> Basic Tajweed Rules</li>
+                            <li><i class="fas fa-check"></i> Word Formation</li>
+                        </ul>
+                        <p><strong>Duration:</strong> 2-3 months</p>
+                        <a href="#" class="btn btn-primary mt-20 demo-trigger" style="width: 100%;">Enroll Now</a>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-header">
+                        <i class="fas fa-quran"></i>
+                        <h3>Quran with Tajweed</h3>
+                    </div>
+                    <div class="course-body">
+                        <p>Learn Quran recitation with proper Tajweed rules and pronunciation.</p>
+                        <ul class="course-features">
+                            <li><i class="fas fa-check"></i> Complete Tajweed Rules</li>
+                            <li><i class="fas fa-check"></i> Proper Makharij Practice</li>
+                            <li><i class="fas fa-check"></i> Quran Recitation Practice</li>
+                            <li><i class="fas fa-check"></i> Fluency Development</li>
+                        </ul>
+                        <p><strong>Duration:</strong> 6-12 months</p>
+                        <a href="#" class="btn btn-primary mt-20 demo-trigger" style="width: 100%;">Enroll Now</a>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-header">
+                        <i class="fas fa-star"></i>
+                        <h3>Hifz Program</h3>
+                    </div>
+                    <div class="course-body">
+                        <p>Complete Quran memorization program with revision schedule.</p>
+                        <ul class="course-features">
+                            <li><i class="fas fa-check"></i> Complete Quran Memorization</li>
+                            <li><i class="fas fa-check"></i> Daily Revision Schedule</li>
+                            <li><i class="fas fa-check"></i> Memorization Techniques</li>
+                            <li><i class="fas fa-check"></i> Regular Testing</li>
+                        </ul>
+                        <p><strong>Duration:</strong> 2-3 years</p>
+                        <a href="#" class="btn btn-primary mt-20 demo-trigger" style="width: 100%;">Enroll Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats" class="stats">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Achievements</h2>
+                <p>Trusted by students worldwide</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" data-count="500">0</div>
+                    <p>Students Taught</p>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="25">0</div>
+                    <p>Countries</p>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="100">0</div>
+                    <p>% Satisfaction</p>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="10">0</div>
+                    <p>Years Experience</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Modal -->
+    <div class="modal" id="demoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Book Your Free Demo Class</h3>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Fill this form to book your <strong>FREE 30-minute trial class</strong>. We'll contact you within 24 hours to schedule your session.</p>
+                
+                <form id="demoForm" class="mt-30">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" class="form-control" placeholder="Enter your full name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" class="form-control" placeholder="Your email address" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" class="form-control" placeholder="Your phone number" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="country">Country *</label>
+                        <select id="country" class="form-control" required>
+                            <option value="">Select Country</option>
+                            <option value="Pakistan">Pakistan</option>
+                            <option value="USA">USA</option>
+                            <option value="UK">UK</option>
+                            <option value="Canada">Canada</option>
+                            <option value="UAE">UAE</option>
+                            <option value="Australia">Australia</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="age">Student Age *</label>
+                        <select id="age" class="form-control" required>
+                            <option value="">Select Age Group</option>
+                            <option value="5-10">5-10 years (Child)</option>
+                            <option value="11-17">11-17 years (Teen)</option>
+                            <option value="18-30">18-30 years (Adult)</option>
+                            <option value="30+">30+ years</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="course">Course Interested In *</label>
+                        <select id="course" class="form-control" required>
+                            <option value="">Select Course</option>
+                            <option value="Noorani Qaida">Noorani Qaida</option>
+                            <option value="Quran with Tajweed">Quran with Tajweed</option>
+                            <option value="Hifz Program">Hifz Program (Memorization)</option>
+                            <option value="Nazra">Nazra (Recitation)</option>
+                            <option value="Tajweed Rules">Advanced Tajweed Rules</option>
+                            <option value="Not Sure">Not Sure - Need Guidance</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="level">Current Level</label>
+                        <select id="level" class="form-control">
+                            <option value="">Select Level</option>
+                            <option value="Beginner">Beginner (Starting from scratch)</option>
+                            <option value="Basic">Basic (Knows Arabic letters)</option>
+                            <option value="Intermediate">Intermediate (Can read slowly)</option>
+                            <option value="Advanced">Advanced (Wants to improve Tajweed)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Additional Message</label>
+                        <textarea id="message" class="form-control" rows="3" placeholder="Any specific requirements or questions..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px;">
+                        <i class="fas fa-paper-plane"></i> Submit & Book Free Demo
+                    </button>
+                    
+                    <p class="mt-20 text-center" style="font-size: 0.9rem; color: #666;">
+                        <i class="fas fa-info-circle"></i> We will contact you at <strong>codecrew00@gmail.com</strong> or <strong>+92 310 0577914</strong>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Student Reviews</h2>
+                <p>What our students say about our teaching</p>
+            </div>
+            
+            <div class="testimonial">
+                <div class="testimonial-content">
+                    "Muhammad Imran is an excellent teacher. My 8-year-old daughter has improved her Quran recitation significantly in just 3 months. His patience and teaching methods are outstanding. Highly recommended!"
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-img">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div>
+                        <h4>Ahmed Raza</h4>
+                        <p>Parent from USA</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Information</h2>
+                <p>Get in touch for Quran learning inquiries</p>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Contact Details</h3>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-user"></i>
+                        <div>
+                            <h4>Name</h4>
+                            <p>Muhammad Imran</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Phone/WhatsApp</h4>
+                            <p>+92 310 0577914</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>codecrew00@gmail.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Location</h4>
+                            <p>Azad Kashmir, Pakistan</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>Availability</h4>
+                            <p>24/7 Online Classes</p>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="https://wa.me/923100577914" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="skype:codecrew00?call"><i class="fab fa-skype"></i></a>
+                        <a href="mailto:codecrew00@gmail.com"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3>Send Quick Message</h3>
+                    <form id="contactForm" class="mt-30">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Your Name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Your Email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <select class="form-control" required>
+                                <option value="">Select Course Interest</option>
+                                <option value="Qaida">Noorani Qaida</option>
+                                <option value="Tajweed">Quran with Tajweed</option>
+                                <option value="Hifz">Hifz Program</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <textarea class="form-control" rows="4" placeholder="Your Message" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>QuranMaster</h3>
+                    <p>Professional online Quran teaching with certified tutors. Learn Quran with proper Tajweed from the comfort of your home.</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul style="list-style: none;">
+                        <li><a href="#home" style="color: rgba(255,255,255,0.8); text-decoration: none;">Home</a></li>
+                        <li><a href="#about" style="color: rgba(255,255,255,0.8); text-decoration: none;">About</a></li>
+                        <li><a href="#courses" style="color: rgba(255,255,255,0.8); text-decoration: none;">Courses</a></li>
+                        <li><a href="#contact" style="color: rgba(255,255,255,0.8); text-decoration: none;">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-phone" style="margin-right: 10px;"></i> +92 310 0577914</p>
+                    <p><i class="fas fa-envelope" style="margin-right: 10px;"></i> codecrew00@gmail.com</p>
+                    <p><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> Azad Kashmir, Pakistan</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Muhammad Imran - Online Quran Tutor. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ====== MOBILE MENU TOGGLE ======
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navMenu.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link
